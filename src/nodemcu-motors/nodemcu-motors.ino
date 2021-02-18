@@ -12,7 +12,7 @@ const char *ssid = SSID_F;
 const char *password = PASSWORD_F;
 
 // PubNub Settings
-const char *channel = "TestChannel";
+const char *channel = "motors";
 char stateBuffer[550];
 WiFiClient *client;
 
@@ -42,15 +42,12 @@ void setup(void)
     }
     Serial.println("WiFi connected");
 
-    PubNub.begin(PUB_KEY, SUB_KEY);
-
     // Print the IP address
     Serial.println(WiFi.localIP());
+
+    PubNub.begin(PUB_KEY, SUB_KEY);
+
     // Setup pins as output
-    for (int i = 0; i < pinCount; i++)
-    {
-        pinMode(pins[i], OUTPUT);
-    }
 
     pinMode(IN1, OUTPUT);
     pinMode(IN2, OUTPUT);

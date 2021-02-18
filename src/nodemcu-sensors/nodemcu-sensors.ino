@@ -30,10 +30,10 @@ void setup()
     }
     Serial.println("WiFi connected");
 
-    PubNub.begin(PUB_KEY, SUB_KEY);
-
     // Print the IP address
     Serial.println(WiFi.localIP());
+
+    PubNub.begin(PUB_KEY, SUB_KEY);
 }
 
 void report(double humidity, double tempC, double tempF, double MQ7, double MQ3)
@@ -56,6 +56,7 @@ void report(double humidity, double tempC, double tempF, double MQ7, double MQ3)
     client->stop();
     Serial.println("Reported!");
 }
+
 void loop()
 {
     // Acquire the data from the Arduino Nano, read it, and report it to the PubNub Server
