@@ -51,8 +51,8 @@ public class MainActivity extends AppCompatActivity
 
         PNConfiguration pnConfiguration = new PNConfiguration();
 
-        pnConfiguration.setPublishKey("pub-c-1e84af4f-2372-4027-940a-d3cb459fdcbe");
-        pnConfiguration.setSubscribeKey("sub-c-997c14f8-2a2a-11eb-8e02-129fdf4b0d84");
+        pnConfiguration.setPublishKey("xx");
+        pnConfiguration.setSubscribeKey("xx");
         pnConfiguration.setUuid("theClientUUID");
 
         pubnub = new PubNub(pnConfiguration);
