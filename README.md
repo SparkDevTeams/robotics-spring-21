@@ -14,7 +14,7 @@
 
 ## Project Summary
 
-The prupose of this project is to build a Search-and-Rescue Robot that can monitor the conditions of the location where it is deployed and detect the gases in the nearby area. The robot should be able to provide a live video feed of the area where it's at and the sensor data to an android app that is connected to the robot. There will also be a drone that will provide a bird's eye view over the location, it should be able to follow the ground robot by itself with the use of tracking algorithms, and it should be able to land and connect with the ground robot with the use of mechanical claws that will hold it in place.
+The purpose of this project is to build a Search-and-Rescue Robot that can monitor the conditions of the location where it is deployed and detect the gases in the nearby area. The robot should be able to provide a live video feed of the area where it's at and the sensor data to an android app that is connected to the robot. There will also be a drone that will provide a bird's eye view over the location, it should be able to follow the ground robot by itself with the use of tracking algorithms, and it should be able to land and connect with the ground robot with the use of mechanical claws that will hold it in place.
 
 ## Programming Languages
 
