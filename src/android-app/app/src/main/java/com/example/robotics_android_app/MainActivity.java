@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -34,9 +36,8 @@ import com.pubnub.api.models.consumer.objects_api.uuid.PNUUIDMetadataResult;
 
 public class MainActivity extends AppCompatActivity
 {
-
+    private WebView webView;
     private TextView messagesText;
-
     private PubNub pubnub;
     private String theChannel = "motors";
     private String sensorChannel = "sensors";
@@ -46,8 +47,14 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        webView = (WebView) findViewById(R.id.meb_View);
+        webView.setWebViewClient(new WebViewClient());
+        webView.loadUrl("http://99.177.203.235:8000/index.html");
 
         PNConfiguration pnConfiguration = new PNConfiguration();
 

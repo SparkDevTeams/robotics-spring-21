@@ -6,36 +6,6 @@
     android:layout_height="match_parent"
     android:padding="24dp">
 
-    <ScrollView
-        android:layout_width="355dp"
-        android:layout_height="453dp"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="803dp">
-
-        <TextView
-            android:id="@+id/messages_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:enabled="true"
-            android:gravity="start|top"
-            android:importantForAutofill="no"
-            tools:ignore="LabelFor" />
-    </ScrollView>
-
-    <ImageView
-        android:id="@+id/d_pad"
-        android:layout_width="298dp"
-        android:layout_height="294dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginHorizontal="70dp"
-        android:layout_marginVertical="70dp"
-        android:layout_marginEnd="62dp"
-        android:layout_marginRight="62dp"
-        android:layout_marginBottom="50dp"
-        app:srcCompat="@mipmap/ic_launcher_foreground" />
     <!--
         <EditText
             android:id="@+id/entry_update_text"
@@ -53,6 +23,44 @@
             tools:ignore="HardcodedText" />
             -->
 
+
+    <ScrollView
+        android:layout_width="355dp"
+        android:layout_height="453dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="156dp">
+
+        <TextView
+            android:id="@+id/messages_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:enabled="true"
+            android:gravity="start|top"
+            android:importantForAutofill="no"
+            tools:ignore="LabelFor" />
+    </ScrollView>
+
+    <WebView
+        android:id="@+id/meb_View"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+
+    <ImageView
+        android:id="@+id/d_pad"
+        android:layout_width="298dp"
+        android:layout_height="294dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginHorizontal="70dp"
+        android:layout_marginVertical="70dp"
+        android:layout_marginStart="70dp"
+        android:layout_marginLeft="70dp"
+        android:layout_marginTop="866dp"
+        android:layout_marginBottom="13dp"
+        app:srcCompat="@mipmap/ic_launcher_foreground" />
 
     <Button
         android:id="@+id/right_button"
