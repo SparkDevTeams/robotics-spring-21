@@ -1,6 +1,7 @@
 package com.example.robotics_android_app;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.os.Bundle;
 import android.view.MotionEvent;
@@ -11,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import java.util.Arrays;
+
 /*
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraint.widget.ConstraintSet;
@@ -32,15 +34,61 @@ import com.pubnub.api.models.consumer.pubsub.message_actions.PNMessageActionResu
 import com.pubnub.api.models.consumer.objects_api.channel.PNChannelMetadataResult;
 import com.pubnub.api.models.consumer.objects_api.membership.PNMembershipResult;
 import com.pubnub.api.models.consumer.objects_api.uuid.PNUUIDMetadataResult;
+import android.graphics.Color;
+import android.graphics.Typeface;
+import android.os.Bundle;
 
+import android.util.Log;
+import android.view.View;
+import android.widget.TableLayout;
+import android.widget.TableRow;
+import android.widget.TableRow.LayoutParams;
+import android.widget.TextView;
+import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity
+public class MainActivity extends AppCompatActivity implements View.OnClickListener
 {
     private WebView webView;
     private TextView messagesText;
     private PubNub pubnub;
     private String theChannel = "motors";
     private String sensorChannel = "sensors";
+
+
+    @Override
+    public void onClick(View v) {
+        int id = v.getId();
+        TextView tv = findViewById(id);
+        if (null != tv) {
+            Log.i("onClick", "Clicked on row :: " + id);
+            Toast.makeText(this, "Clicked on row :: " + id + ", Text :: " + tv.getText(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private TextView getTextView(int id, String title, int color, int typeface, int bgColor) {
+        TextView tv = new TextView(this);
+        tv.setId(id);
+        tv.setText(title.toUpperCase());
+        tv.setTextColor(color);
+        tv.setPadding(40, 40, 40, 40);
+        tv.setTypeface(Typeface.DEFAULT, typeface);
+        tv.setBackgroundColor(bgColor);
+        tv.setLayoutParams(getLayoutParams());
+        tv.setOnClickListener(this);
+        return tv;
+    }
+    private TableLayout.LayoutParams getTblLayoutParams() {
+        return new TableLayout.LayoutParams(
+                LayoutParams.MATCH_PARENT,
+                LayoutParams.WRAP_CONTENT);
+    }
+    private LayoutParams getLayoutParams() {
+        LayoutParams params = new LayoutParams(
+                LayoutParams.MATCH_PARENT,
+                LayoutParams.WRAP_CONTENT);
+        params.setMargins(2, 0, 0, 2);
+        return params;
+    }
 
 
 
@@ -51,6 +99,11 @@ public class MainActivity extends AppCompatActivity
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main);
+
+        webView = (WebView) findViewById(R.id.webView);
+        webView.setWebViewClient(new WebViewClient());
+        webView.loadUrl("example.com");
 
         webView = (WebView) findViewById(R.id.meb_View);
         webView.setWebViewClient(new WebViewClient());
@@ -65,24 +118,24 @@ public class MainActivity extends AppCompatActivity
         pubnub = new PubNub(pnConfiguration);
 
 
+
+
+
         pubnub.addListener(new SubscribeCallback()
         {
+
 
             @Override
             public void message(PubNub pubnub, PNMessageResult event)
             {
                 JsonObject message = event.getMessage().getAsJsonObject();
-                String humidity = message.get("humidity").getAsString();
-                String temp = message.get("tempF").getAsString();
-                String gas = message.get("MQ7").getAsString();
-                String mq3 = message.get("MQ3").getAsString();
+                addHeaders(message);
 
-//                displayMessage("Humidity: ", humidity);
-//                displayMessage("Temperature (F): ", temp);
-//                displayMessage("Gas: ", gas);
-//                displayMessage("MQ3: ", mq3);
-                displayMessage("[Sensors]", "Humidity: " + humidity + "\nTemperature (F): " + temp + "\nGas: " + gas + "\nMQ3: " + mq3);
+
+//                displayMessage("[Sensors]", "Humidity: " + humidity + "\nTemperature (F): " + temp + "\nGas: " + gas + "\nMQ3: " + mq3);
             }
+
+
 
             @Override
             public void status(PubNub pubnub, PNStatus event) {
@@ -414,6 +467,44 @@ public class MainActivity extends AppCompatActivity
                 messagesText.setText(textBuilder.toString());
             }
         });
+    }
+
+    // might delete
+//    protected void addData() {
+//
+//        TableLayout tl = findViewById(R.id.table);
+//        for (int i = 0; i < 4 ; i++) {
+//            TableRow tr = new TableRow(this);
+//            tr.setLayoutParams(getLayoutParams());
+//            tr.addView(getTextView(i + 1, companies[i], Color.WHITE, Typeface.NORMAL));
+//            tr.addView(getTextView(i + numCompanies, os[i], Color.WHITE, Typeface.NORMAL));
+//            tl.addView(tr, getTblLayoutParams());
+//        }
+//    }
+
+    protected void addHeaders(JsonObject message) {
+        String humidity = message.get("humidity").getAsString();
+        String temp = message.get("tempF").getAsString();
+        String gas = message.get("MQ7").getAsString();
+        String mq3 = message.get("MQ3").getAsString();
+
+        TableLayout tl = findViewById(R.id.table);
+        TableRow tr = new TableRow(this);
+        tr.setLayoutParams(getLayoutParams());
+
+        // Sensors
+        tr.addView(getTextView(0, "HUMIDITY", Color.WHITE, Typeface.BOLD, Color.BLUE));
+        tr.addView(getTextView(1, "TEMPERATURE", Color.WHITE, Typeface.BOLD, Color.BLUE));
+        tr.addView(getTextView(2, "GAS", Color.WHITE, Typeface.BOLD, Color.BLUE));
+        tr.addView(getTextView(3, "MQ3", Color.WHITE, Typeface.BOLD, Color.BLUE));
+
+        // Data
+        tr.addView(getTextView(4, humidity, Color.WHITE, Typeface.BOLD, Color.BLUE));
+        tr.addView(getTextView(5, temp, Color.WHITE, Typeface.BOLD, Color.BLUE));
+        tr.addView(getTextView(6, gas, Color.WHITE, Typeface.BOLD, Color.BLUE));
+        tr.addView(getTextView(7, mq3, Color.WHITE, Typeface.BOLD, Color.BLUE));
+
+        tl.addView(tr, getTblLayoutParams());
     }
 
 }
