@@ -25,10 +25,12 @@
 
 
     <ScrollView
-        android:layout_width="355dp"
-        android:layout_height="453dp"
+        android:layout_width="320dp"
+        android:layout_height="320dp"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="207dp">
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="31dp"
+        android:layout_marginRight="4dp">
 
         <TextView
             android:id="@+id/messages_text"
@@ -41,8 +43,7 @@
             tools:ignore="LabelFor" />
     </ScrollView>
 
-    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+    <ScrollView
         android:layout_width="240dp"
         android:layout_height="300dp"
         android:scrollbars="none"
@@ -52,7 +53,7 @@
             android:id="@+id/table"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:stretchColumns="0,1" />
+            android:stretchColumns="0,1,2,3" />
 
     </ScrollView>
 
@@ -62,13 +63,6 @@
         android:layout_height="400dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true">
-
-    </WebView>
-    <WebView
-        android:id="@+id/webView2"
-        android:layout_width="240dp"
-        android:layout_height="180dp">
-
 
     </WebView>
 

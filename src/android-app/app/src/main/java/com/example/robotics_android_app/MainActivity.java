@@ -101,13 +101,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         setContentView(R.layout.activity_main);
 
+
+        JsonObject message = new JsonObject();
+        message.addProperty("humidity", 0);
+        message.addProperty("tempF", 0);
+        message.addProperty("MQ7", 0);
+        message.addProperty("MQ3", 0);
+        addHeaders(message);
+
         webView = (WebView) findViewById(R.id.webView);
         webView.setWebViewClient(new WebViewClient());
         webView.loadUrl("example.com");
-
-        webView = (WebView) findViewById(R.id.meb_View);
-        webView.setWebViewClient(new WebViewClient());
-        webView.loadUrl("http://99.177.203.235:8000/index.html");
 
         PNConfiguration pnConfiguration = new PNConfiguration();
 
@@ -116,9 +120,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         pnConfiguration.setUuid("theClientUUID");
 
         pubnub = new PubNub(pnConfiguration);
-
-
-
 
 
         pubnub.addListener(new SubscribeCallback()
@@ -482,7 +483,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        }
 //    }
 
-    protected void addHeaders(JsonObject message) {
+    public void addHeaders(JsonObject message) {
         String humidity = message.get("humidity").getAsString();
         String temp = message.get("tempF").getAsString();
         String gas = message.get("MQ7").getAsString();
@@ -494,17 +495,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         // Sensors
         tr.addView(getTextView(0, "HUMIDITY", Color.WHITE, Typeface.BOLD, Color.BLUE));
-        tr.addView(getTextView(1, "TEMPERATURE", Color.WHITE, Typeface.BOLD, Color.BLUE));
-        tr.addView(getTextView(2, "GAS", Color.WHITE, Typeface.BOLD, Color.BLUE));
-        tr.addView(getTextView(3, "MQ3", Color.WHITE, Typeface.BOLD, Color.BLUE));
+        tr.addView(getTextView(1, "humidity", Color.WHITE, Typeface.BOLD, Color.BLUE));
+        tl.addView(tr, getTblLayoutParams());
+
+        tr.addView(getTextView(0, "TEMPERATURE", Color.WHITE, Typeface.BOLD, Color.BLUE));
+        tr.addView(getTextView(1, "temp", Color.WHITE, Typeface.BOLD, Color.BLUE));
+        tl.addView(tr, getTblLayoutParams());
+
+//        tr.addView(getTextView(0, "GAS", Color.WHITE, Typeface.BOLD, Color.BLUE));
+//        tr.addView(getTextView(1, gas, Color.WHITE, Typeface.BOLD, Color.BLUE));
+//        tl.addView(tr, getTblLayoutParams());
+//
+//        tr.addView(getTextView(0, "MQ3", Color.WHITE, Typeface.BOLD, Color.BLUE));
+//        tr.addView(getTextView(1, mq3, Color.WHITE, Typeface.BOLD, Color.BLUE));
+//        tl.addView(tr, getTblLayoutParams());
 
         // Data
-        tr.addView(getTextView(4, humidity, Color.WHITE, Typeface.BOLD, Color.BLUE));
-        tr.addView(getTextView(5, temp, Color.WHITE, Typeface.BOLD, Color.BLUE));
-        tr.addView(getTextView(6, gas, Color.WHITE, Typeface.BOLD, Color.BLUE));
-        tr.addView(getTextView(7, mq3, Color.WHITE, Typeface.BOLD, Color.BLUE));
-
-        tl.addView(tr, getTblLayoutParams());
+//        tl.addView(tr, getTblLayoutParams());
     }
 
 }
