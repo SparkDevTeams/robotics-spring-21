@@ -2,18 +2,25 @@ plugins {
     id 'com.android.application'
 }
 
+def apikeyPropertiesFile = rootProject.file("apikey.properties")
+def apikeyProperties = new Properties()
+apikeyProperties.load(new FileInputStream(apikeyPropertiesFile))
+
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.2"
 
     defaultConfig {
         applicationId "com.example.robotics_android_app"
-        minSdkVersion 25
+        minSdkVersion 26
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField "String", "PUB_KEY", apikeyProperties['PUB_KEY']
+        buildConfigField "String", "SUB_KEY", apikeyProperties['SUB_KEY']
     }
 
     buildTypes {
@@ -32,8 +39,8 @@ dependencies {
 
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'com.google.android.material:material:1.2.1'
-    testImplementation 'junit:junit:4.+'
+    testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
-    implementation group: 'com.pubnub', name: 'pubnub-gson', version: '4.+'
+    implementation group: 'com.pubnub', name: 'pubnub-gson', version: '4.35.0'
 }

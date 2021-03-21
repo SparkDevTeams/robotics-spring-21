@@ -4,33 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/bg"
     android:padding="24dp">
-
-    <!--
-        <EditText
-            android:id="@+id/entry_update_text"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_alignParentBottom="true"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:ems="10"
-            android:hint="enter update for Earth"
-            android:importantForAutofill="no"
-            android:inputType="text"
-            android:text="Mostly Harmless."
-            android:textSize="14sp"
-            tools:ignore="HardcodedText" />
-            -->
 
 
     <ScrollView
         android:layout_width="320dp"
         android:layout_height="320dp"
         android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:layout_marginTop="31dp"
-        android:layout_marginRight="4dp">
+        android:layout_marginEnd="4dp">
 
         <TextView
             android:id="@+id/messages_text"
@@ -39,134 +23,109 @@
             android:ems="10"
             android:enabled="true"
             android:gravity="start|top"
+            android:textColor="@color/white"
             android:importantForAutofill="no"
             tools:ignore="LabelFor" />
     </ScrollView>
 
-    <ScrollView
+
+    <TableLayout
+        android:id="@+id/table"
         android:layout_width="240dp"
         android:layout_height="300dp"
         android:scrollbars="none"
-        tools:context=".MainActivity">
+        android:stretchColumns="*"
+        tools:context=".MainActivity"/>
 
-        <TableLayout
-            android:id="@+id/table"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:stretchColumns="0,1,2,3" />
-
-    </ScrollView>
 
     <WebView
         android:id="@+id/webView"
-        android:layout_width="400dp"
-        android:layout_height="400dp"
+        android:layout_width="938dp"
+        android:layout_height="527dp"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true">
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="212dp">
 
     </WebView>
 
     <ImageView
         android:id="@+id/d_pad"
-        android:layout_width="298dp"
-        android:layout_height="294dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginLeft="50dp"
-        android:layout_marginBottom="1dp"
-
-        android:visibility="visible"
-        app:srcCompat="@mipmap/ic_launcher_foreground" />
-    <Button
-        android:id="@+id/up_button"
-        android:layout_width="73dp"
-        android:layout_height="87dp"
+        android:layout_width="472dp"
+        android:layout_height="358dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginHorizontal="70dp"
-        android:layout_marginVertical="170dp"
-        android:layout_marginStart="160dp"
-        android:layout_marginRight="64dp"
-        android:layout_marginBottom="90dp"
+        android:layout_marginStart="-120dp"
+        android:layout_marginBottom="-40dp"
+        android:visibility="visible"
+        app:srcCompat="@mipmap/ic_launcher_foreground"
+        tools:ignore="ContentDescription" />
+
+    <Button
+        android:id="@+id/down_button"
+        android:layout_width="70dp"
+        android:layout_height="80dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginVertical="40dp"
+        android:layout_marginStart="80dp"
+        android:background="@android:color/transparent"
+        android:onClick="sendDown"
+        android:text="" />
+    <Button
+        android:id="@+id/up_button"
+        android:layout_width="70dp"
+        android:layout_height="80dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginVertical="160dp"
+        android:layout_marginStart="80dp"
         android:background="@android:color/transparent"
         android:onClick="sendUp"
         android:text="" />
-
     <Button
         android:id="@+id/right_button"
-        android:layout_width="73dp"
-        android:layout_height="87dp"
+        android:layout_width="80dp"
+        android:layout_height="70dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginHorizontal="70dp"
-        android:layout_marginVertical="120dp"
-        android:layout_marginStart="210dp"
-        android:layout_marginRight="64dp"
-        android:layout_marginBottom="90dp"
+        android:layout_marginVertical="106dp"
+        android:layout_marginStart="150dp"
         android:background="@android:color/transparent"
         android:onClick="sendRight"
         android:text="" />
 
     <Button
         android:id="@+id/left_button"
-        android:layout_width="68dp"
-        android:layout_height="72dp"
+        android:layout_width="80dp"
+        android:layout_height="70dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginVertical="120dp"
-        android:layout_marginHorizontal="70dp"
-        android:layout_marginStart="100dp"
-        android:layout_marginRight="240dp"
-        android:layout_marginBottom="90dp"
+        android:layout_marginVertical="106dp"
+        android:layout_marginStart="0dp"
         android:background="@android:color/transparent"
         android:onClick="sendLeft"
         android:text="" />
 
     <Button
-        android:id="@+id/down_button"
-        android:layout_width="68dp"
-        android:layout_height="76dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginVertical="65dp"
-        android:layout_marginHorizontal="70dp"
-        android:layout_marginStart="165dp"
-        android:layout_marginRight="160dp"
-        android:layout_marginBottom="72dp"
-        android:background="@android:color/transparent"
-        android:onClick="sendDown"
-        android:text="" />
-
-    <Button
         android:layout_width="133dp"
         android:layout_height="76dp"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="1dp"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="15dp"
-        android:text="Grab" />
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="15dp"
+        android:backgroundTint="@color/pinkish"
+        android:text="@string/grab" />
 
     <Button
         android:layout_width="133dp"
         android:layout_height="76dp"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginRight="175dp"
+        android:layout_marginEnd="175dp"
         android:layout_marginBottom="1dp"
-        android:text="Release" />
-
-
-    <!--    <RecyclerView-->
-<!--        android:layout_width="296dp"-->
-<!--        android:layout_height="248dp"-->
-<!--        android:layout_alignParentStart="true"-->
-<!--        android:layout_alignParentTop="true"-->
-<!--        android:layout_alignParentEnd="true"-->
-<!--        android:layout_marginStart="40dp"-->
-<!--        android:layout_marginTop="500dp"-->
-<!--        android:layout_marginEnd="920dp"-->
-<!--        tools:itemCount="4"-->
-<!--        tools:listitem="@layout/recycler_view_item" />-->
+        android:backgroundTint="@color/pinkish"
+        android:text="@string/release" />
 
 
 </RelativeLayout>

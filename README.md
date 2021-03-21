@@ -46,6 +46,8 @@ The purpose of this project is to build a Search-and-Rescue Robot that can monit
 
 ## Notes
 
+### Microcontrollers API keys
+
 Make sure to have a Secrets.h file in your Arduino libraries folder that looks like this:
 
 ```c
@@ -57,9 +59,21 @@ Make sure to have a Secrets.h file in your Arduino libraries folder that looks l
 
 ```
 
-### Guide
-
 1. Go to your Arduino Library folder.
 2. Inside that folder make a new folder called "Secrets".
 3. Go inside this new folder and make a new file called ```Secrets.h```.
 4. Open this file in a text editor and fill in the the values for each key.
+
+### Android App API Keys
+
+How to hide API keys in Android Studio:
+
+1. Make a file called ```apikey.properties``` in the root directory of the Android app.
+2. Add these values to the file:
+
+```c
+
+PUB_KEY="pub-c-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+SUB_KEY="sub-c-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+
+```

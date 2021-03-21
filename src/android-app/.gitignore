@@ -3,6 +3,8 @@
 /local.properties
 /.idea/caches
 /.idea/libraries
+/.idea/dictionaries
+/.idea/inspectionProfiles
 /.idea/modules.xml
 /.idea/workspace.xml
 /.idea/navEditor.xml
@@ -12,4 +14,5 @@
 /captures
 .externalNativeBuild
 .cxx
+apikey.properties
 local.properties
