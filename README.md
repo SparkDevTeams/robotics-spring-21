@@ -9,7 +9,9 @@
 **Team-member:** [Militza Mercado-Rogers](https://github.com/MilRog)\
 **Team-Member:** Anthony Velazquez\
 **Team-Member:** [Javier Fernandez](https://github.com/theogcrafted)\
-**Team-Member:** Natalie Rodriguez
+**Team-Member:** Natalie Rodriguez\
+**Team-Member:** Kyle Reynolds\
+**Team-Member:** Eloy Beaucejor
 -->
 
 ## Project Summary
@@ -68,7 +70,7 @@ Make sure to have a Secrets.h file in your Arduino libraries folder that looks l
 
 How to hide API keys in Android Studio:
 
-1. Make a file called ```apikey.properties``` in the root directory of the Android app.
+1. Make a file called ```apikey.properties``` in the root directory of the Android app (```src\android-app```).
 2. Add these values to the file:
 
 ```c
