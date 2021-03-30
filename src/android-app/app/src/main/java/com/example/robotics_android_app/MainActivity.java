@@ -53,6 +53,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private PubNub pubnub;
     private String theChannel = "motors"; // channel for motors communication
     private String sensorChannel = "sensors"; // channel for sensors communication
+    private String clawChannel = "claw"; // channel for claw communication
     private String pubKey = BuildConfig.PUB_KEY; // Pubnub publish key
     private String subKey = BuildConfig.SUB_KEY; // Pubnub subscribe key
 
@@ -167,13 +168,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         if (status.isError()) {
                             status.getErrorData().getThrowable().printStackTrace();
                         }
-                        /*
-                        else {
-                            displayMessage("[PUBLISH: sent]",
-                                    "timetoken: " + result.getTimetoken());
-                        }
-
-                         */
                     }
 
                 }
@@ -255,13 +249,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                             if (status.isError()) {
                                                 status.getErrorData().getThrowable().printStackTrace();
                                             }
-                                            /*
-                                            else {
-                                                displayMessage("[PUBLISH: sent]",
-                                                        "timetoken: " + result.getTimetoken());
-                                            }
-
-                                             */
                                         }
                                     }
                             );
@@ -305,13 +292,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                             if (status.isError()) {
                                                 status.getErrorData().getThrowable().printStackTrace();
                                             }
-                                            /*
-                                            else {
-                                                displayMessage("[PUBLISH: sent]",
-                                                        "timetoken: " + result.getTimetoken());
-                                            }
-
-                                             */
                                         }
                                     }
                             );
@@ -354,13 +334,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                             if (status.isError()) {
                                                 status.getErrorData().getThrowable().printStackTrace();
                                             }
-                                            /*
-                                            else {
-                                                displayMessage("[PUBLISH: sent]",
-                                                        "timetoken: " + result.getTimetoken());
-                                            }
-
-                                             */
                                         }
                                     }
                             );
@@ -375,6 +348,65 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
     }//end sendUp
 
+    @SuppressLint("ClickableViewAccessibility")
+    public void clawGrab(View view) {
+
+        Button button = (Button) findViewById(R.id.grab);
+        button.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    JsonObject entry = new JsonObject();
+
+                    entry.addProperty("Grab", true);
+
+                    pubnub.publish().channel(clawChannel).message(entry).async
+                            (
+                                    new PNCallback<PNPublishResult>() {
+                                        @Override
+                                        public void onResponse(PNPublishResult result, PNStatus status) {
+                                            if (status.isError()) {
+                                                status.getErrorData().getThrowable().printStackTrace();
+                                            }
+                                        }
+                                    }
+                            );
+
+                }
+                return false;
+            }
+        });
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    public void clawRelease(View view) {
+
+        Button button = (Button) findViewById(R.id.release);
+        button.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    JsonObject entry = new JsonObject();
+
+                    entry.addProperty("Release", true);
+
+                    pubnub.publish().channel(clawChannel).message(entry).async
+                            (
+                                    new PNCallback<PNPublishResult>() {
+                                        @Override
+                                        public void onResponse(PNPublishResult result, PNStatus status) {
+                                            if (status.isError()) {
+                                                status.getErrorData().getThrowable().printStackTrace();
+                                            }
+                                        }
+                                    }
+                            );
+
+                }
+                return false;
+            }
+        });
+    }
 
     protected void displayMessage(String messageType, String aMessage) {
         String newLine = "\n";
