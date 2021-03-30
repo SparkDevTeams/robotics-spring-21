@@ -359,7 +359,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     JsonObject entry = new JsonObject();
 
                     entry.addProperty("Grab", true);
-
+                    entry.addProperty("Release", false);
                     pubnub.publish().channel(clawChannel).message(entry).async
                             (
                                     new PNCallback<PNPublishResult>() {
@@ -389,6 +389,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     JsonObject entry = new JsonObject();
 
                     entry.addProperty("Release", true);
+                    entry.addProperty("Grab", false);
 
                     pubnub.publish().channel(clawChannel).message(entry).async
                             (
