@@ -6,13 +6,16 @@
 #include <ArduinoJson.h>
 #include <SimpleTimer.h>
 #include "Secrets.h"
+#include <TimedAction.h>
 
 // WiFi parameters
 const char *ssid = SSID_F;
 const char *password = PASSWORD_F;
 
 // PubNub Settings
-const char *channel = "motors";
+const char *motorChannel = "motors";
+const char *clawChannel = "claw";
+
 char stateBuffer[550];
 WiFiClient *client;
 
@@ -22,11 +25,12 @@ const int IN2 = 12;
 const int IN3 = 13;
 const int IN4 = 15;
 
-// Sensor Pin Settings
-int pinCount = 2;
-int pins[] = {16, 5};
+// claw pin
+const int clawPin = 4; // D2
 
 SimpleTimer timer;
+
+TimedAction clawThread = TimedAction(500, claw);
 
 void setup(void)
 {
@@ -48,18 +52,20 @@ void setup(void)
     PubNub.begin(PUB_KEY, SUB_KEY);
 
     // Setup pins as output
-
     pinMode(IN1, OUTPUT);
     pinMode(IN2, OUTPUT);
     pinMode(IN3, OUTPUT);
     pinMode(IN4, OUTPUT);
+
+    // claw pin
+    pinMode(clawPin, OUTPUT);
 
     timer.setInterval(500);
 }
 
 void go()
 {
-    PubSubClient *pclient = PubNub.subscribe(channel);
+    PubSubClient *pclient = PubNub.subscribe(motorChannel);
     if (!pclient)
     {
         Serial.println("subscription error");
@@ -109,8 +115,51 @@ void go()
     digitalWrite(IN4, input4);
 }
 
+void claw()
+{
+    PubSubClient *pclient = PubNub.subscribe(clawChannel);
+    if (!pclient)
+    {
+        Serial.println("subscription error");
+        delay(1000);
+        return;
+    }
+    char buffer[64];
+    size_t buflen = 0;
+    while (pclient->wait_for_data())
+    {
+        buffer[buflen++] = pclient->read();
+    }
+    buffer[buflen] = 0;
+    pclient->stop();
+    //    Serial.println(buffer);
+
+    if (buflen < 4)
+    {
+        Serial.println("Buffer length below 4");
+        return;
+    }
+    // Parse
+    const size_t bufferSize = JSON_OBJECT_SIZE(2) + 20;
+    DynamicJsonDocument doc(bufferSize);
+
+    deserializeJson(doc, buffer);
+    JsonArray root = doc.as<JsonArray>();
+
+    bool release = root[0]["Release"];
+    bool grab = root[0]["Grab"];
+
+    Serial.print("Release: ");
+    Serial.println(release);
+    Serial.print("Grab: ");
+    Serial.println(grab);
+}
+
+
 void loop()
 {
+    clawThread.check();
+    
     if (timer.isReady())
     {
         go();
