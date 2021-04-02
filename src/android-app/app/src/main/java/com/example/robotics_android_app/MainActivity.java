@@ -159,17 +159,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         entry.addProperty("Input4", false);
 
         pubnub.publish().channel(theChannel).message(entry).async(
-
-
-                new PNCallback<PNPublishResult>() {
-
-                    @Override
-                    public void onResponse(PNPublishResult result, PNStatus status) {
-                        if (status.isError()) {
-                            status.getErrorData().getThrowable().printStackTrace();
-                        }
+                (result, status) -> {
+                    if (status.isError()) {
+                        status.getErrorData().getThrowable().printStackTrace();
                     }
-
                 }
 
         );
@@ -182,7 +175,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void sendDown(View view)
     {
 
-        Button button = (Button)findViewById(R.id.down_button);
+        Button button = findViewById(R.id.down_button);
         button.setOnTouchListener(new View.OnTouchListener() {
 
             @Override
@@ -199,15 +192,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     pubnub.publish().channel(theChannel).message(entry).async
                             (
-                                    new PNCallback<PNPublishResult>()
-                                    {
-                                        @Override
-                                        public void onResponse(PNPublishResult result, PNStatus status) {
-                                            if (status.isError()) {
-                                                status.getErrorData().getThrowable().printStackTrace();
-                                            }
-
+                                    (result, status) -> {
+                                        if (status.isError()) {
+                                            status.getErrorData().getThrowable().printStackTrace();
                                         }
+
                                     }
                             );
 
@@ -226,7 +215,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @SuppressLint("ClickableViewAccessibility")
     public void sendLeft(View view)
     {
-        Button button = (Button)findViewById(R.id.left_button);
+        Button button = findViewById(R.id.left_button);
         button.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event)
@@ -242,13 +231,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     pubnub.publish().channel(theChannel).message(entry).async
                             (
-                                    new PNCallback<PNPublishResult>()
-                                    {
-                                        @Override
-                                        public void onResponse(PNPublishResult result, PNStatus status) {
-                                            if (status.isError()) {
-                                                status.getErrorData().getThrowable().printStackTrace();
-                                            }
+                                    (result, status) -> {
+                                        if (status.isError()) {
+                                            status.getErrorData().getThrowable().printStackTrace();
                                         }
                                     }
                             );
@@ -269,7 +254,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void sendRight(View view)
     {
 
-        Button button = (Button)findViewById(R.id.right_button);
+        Button button = findViewById(R.id.right_button);
         button.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event)
@@ -285,13 +270,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     pubnub.publish().channel(theChannel).message(entry).async
                             (
-                                    new PNCallback<PNPublishResult>()
-                                    {
-                                        @Override
-                                        public void onResponse(PNPublishResult result, PNStatus status) {
-                                            if (status.isError()) {
-                                                status.getErrorData().getThrowable().printStackTrace();
-                                            }
+                                    (result, status) -> {
+                                        if (status.isError()) {
+                                            status.getErrorData().getThrowable().printStackTrace();
                                         }
                                     }
                             );
@@ -311,7 +292,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void sendUp(View view)
     {
 
-        Button button = (Button)findViewById(R.id.up_button);
+        Button button = findViewById(R.id.up_button);
         button.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event)
@@ -327,13 +308,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     pubnub.publish().channel(theChannel).message(entry).async
                             (
-                                    new PNCallback<PNPublishResult>()
-                                    {
-                                        @Override
-                                        public void onResponse(PNPublishResult result, PNStatus status) {
-                                            if (status.isError()) {
-                                                status.getErrorData().getThrowable().printStackTrace();
-                                            }
+                                    (result, status) -> {
+                                        if (status.isError()) {
+                                            status.getErrorData().getThrowable().printStackTrace();
                                         }
                                     }
                             );
@@ -348,26 +325,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
     }//end sendUp
 
+
     @SuppressLint("ClickableViewAccessibility")
     public void clawGrab(View view) {
 
-        Button button = (Button) findViewById(R.id.grab);
+        Button button = findViewById(R.id.grab);
         button.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
                     JsonObject entry = new JsonObject();
 
-                    entry.addProperty("Grab", true);
                     entry.addProperty("Release", false);
+                    entry.addProperty("Grab", true);
                     pubnub.publish().channel(clawChannel).message(entry).async
                             (
-                                    new PNCallback<PNPublishResult>() {
-                                        @Override
-                                        public void onResponse(PNPublishResult result, PNStatus status) {
-                                            if (status.isError()) {
-                                                status.getErrorData().getThrowable().printStackTrace();
-                                            }
+                                    (result, status) -> {
+                                        if (status.isError()) {
+                                            status.getErrorData().getThrowable().printStackTrace();
                                         }
                                     }
                             );
@@ -378,10 +353,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
     }
 
+
     @SuppressLint("ClickableViewAccessibility")
     public void clawRelease(View view) {
 
-        Button button = (Button) findViewById(R.id.release);
+        Button button = findViewById(R.id.release);
         button.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -393,12 +369,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     pubnub.publish().channel(clawChannel).message(entry).async
                             (
-                                    new PNCallback<PNPublishResult>() {
-                                        @Override
-                                        public void onResponse(PNPublishResult result, PNStatus status) {
-                                            if (status.isError()) {
-                                                status.getErrorData().getThrowable().printStackTrace();
-                                            }
+                                    (result, status) -> {
+                                        if (status.isError()) {
+                                            status.getErrorData().getThrowable().printStackTrace();
                                         }
                                     }
                             );
@@ -409,6 +382,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
     }
 
+    
     protected void displayMessage(String messageType, String aMessage) {
         String newLine = "\n";
 
