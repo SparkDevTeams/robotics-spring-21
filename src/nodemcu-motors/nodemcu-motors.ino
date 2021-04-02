@@ -6,15 +6,13 @@
 #include <ArduinoJson.h>
 #include <SimpleTimer.h>
 #include "Secrets.h"
-#include <TimedAction.h>
 
 // WiFi parameters
 const char *ssid = SSID_F;
 const char *password = PASSWORD_F;
 
 // PubNub Settings
-const char *motorChannel = "motors";
-const char *clawChannel = "claw";
+const char *channel = "master";
 
 char stateBuffer[550];
 WiFiClient *client;
@@ -29,8 +27,6 @@ const int IN4 = 15;
 const int clawPin = 4; // D2
 
 SimpleTimer timer;
-
-TimedAction clawThread = TimedAction(500, claw);
 
 void setup(void)
 {
@@ -63,9 +59,9 @@ void setup(void)
     timer.setInterval(500);
 }
 
-void go()
+void sub()
 {
-    PubSubClient *pclient = PubNub.subscribe(motorChannel);
+    PubSubClient *pclient = PubNub.subscribe(channel);
     if (!pclient)
     {
         Serial.println("subscription error");
@@ -89,80 +85,51 @@ void go()
     }
 
     // Parse
-    const size_t bufferSize = JSON_OBJECT_SIZE(4) + 40;
+    const size_t bufferSize = JSON_OBJECT_SIZE(5) + 60;
     DynamicJsonDocument doc(bufferSize);
 
     deserializeJson(doc, buffer);
     JsonArray root = doc.as<JsonArray>();
 
-    bool input1 = root[0]["Input1"]; // false
-    bool input2 = root[0]["Input2"]; // false
-    bool input3 = root[0]["Input3"]; // false
-    bool input4 = root[0]["Input4"]; // false
+    const char *swap = root[0]["swap"];
+    Serial.println(swap);
 
-    Serial.print("Input1: ");
-    Serial.println(input1);
-    Serial.print("Input2: ");
-    Serial.println(input2);
-    Serial.print("Input3: ");
-    Serial.println(input3);
-    Serial.print("Input4: ");
-    Serial.println(input4);
+    if (String(swap) == "motors")
+    {
+        bool input1 = root[0]["Input1"]; // false
+        bool input2 = root[0]["Input2"]; // false
+        bool input3 = root[0]["Input3"]; // false
+        bool input4 = root[0]["Input4"]; // false
 
-    digitalWrite(IN1, input1);
-    digitalWrite(IN2, input2);
-    digitalWrite(IN3, input3);
-    digitalWrite(IN4, input4);
+        Serial.print("Input1: ");
+        Serial.println(input1);
+        Serial.print("Input2: ");
+        Serial.println(input2);
+        Serial.print("Input3: ");
+        Serial.println(input3);
+        Serial.print("Input4: ");
+        Serial.println(input4);
+
+        digitalWrite(IN1, input1);
+        digitalWrite(IN2, input2);
+        digitalWrite(IN3, input3);
+        digitalWrite(IN4, input4);
+    }
+    else if (String(swap) == "claw")
+    {
+        bool claw = root[0]["claw"]; // true == Release | false == Grab
+
+        digitalWrite(clawPin, claw);
+    }
 }
-
-void claw()
-{
-    PubSubClient *pclient = PubNub.subscribe(clawChannel);
-    if (!pclient)
-    {
-        Serial.println("subscription error");
-        delay(1000);
-        return;
-    }
-    char buffer[64];
-    size_t buflen = 0;
-    while (pclient->wait_for_data())
-    {
-        buffer[buflen++] = pclient->read();
-    }
-    buffer[buflen] = 0;
-    pclient->stop();
-    //    Serial.println(buffer);
-
-    if (buflen < 4)
-    {
-        Serial.println("Buffer length below 4");
-        return;
-    }
-    // Parse
-    const size_t bufferSize = JSON_OBJECT_SIZE(2) + 20;
-    DynamicJsonDocument doc(bufferSize);
-
-    deserializeJson(doc, buffer);
-    JsonArray root = doc.as<JsonArray>();
-
-    bool release = root[0]["Release"];
-    bool grab = root[0]["Grab"];
-
-    Serial.print("Release: ");
-    Serial.println(release);
-    Serial.print("Grab: ");
-    Serial.println(grab);
-}
-
 
 void loop()
 {
-    clawThread.check();
-    
+    // clawThread.check();
+
     if (timer.isReady())
     {
-        go();
+        sub();
         timer.reset();
     }
 }
