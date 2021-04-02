@@ -51,11 +51,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private WebView webView;
     private TextView messagesText;
     private PubNub pubnub;
-    private String theChannel = "motors"; // channel for motors communication
-    private String sensorChannel = "sensors"; // channel for sensors communication
-    private String clawChannel = "claw"; // channel for claw communication
-    private String pubKey = BuildConfig.PUB_KEY; // Pubnub publish key
-    private String subKey = BuildConfig.SUB_KEY; // Pubnub subscribe key
+
+    private final String masterChannel = "master"; // channel for motors/claw communication
+    private final String sensorChannel = "sensors"; // channel for sensors communication
+    private final String pubKey = BuildConfig.PUB_KEY; // Pubnub publish key
+    private final String subKey = BuildConfig.SUB_KEY; // Pubnub subscribe key
 
 
     @Override
@@ -153,12 +153,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         JsonObject entry = new JsonObject();
 
+        entry.addProperty("swap", "motors");
         entry.addProperty("Input1", false);
         entry.addProperty("Input2", false);
         entry.addProperty("Input3", false);
         entry.addProperty("Input4", false);
 
-        pubnub.publish().channel(theChannel).message(entry).async(
+        pubnub.publish().channel(masterChannel).message(entry).async(
                 (result, status) -> {
                     if (status.isError()) {
                         status.getErrorData().getThrowable().printStackTrace();
@@ -185,12 +186,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 {
                     JsonObject entry = new JsonObject();
 
+                    entry.addProperty("swap", "motors");
                     entry.addProperty("Input1", true);
                     entry.addProperty("Input2", false);
                     entry.addProperty("Input3", true);
                     entry.addProperty("Input4", false);
 
-                    pubnub.publish().channel(theChannel).message(entry).async
+                    pubnub.publish().channel(masterChannel).message(entry).async
                             (
                                     (result, status) -> {
                                         if (status.isError()) {
@@ -224,12 +226,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 {
                     JsonObject entry = new JsonObject();
 
+                    entry.addProperty("swap", "motors");
                     entry.addProperty("Input1", true);
                     entry.addProperty("Input2", false);
                     entry.addProperty("Input3", false);
                     entry.addProperty("Input4", true);
 
-                    pubnub.publish().channel(theChannel).message(entry).async
+                    pubnub.publish().channel(masterChannel).message(entry).async
                             (
                                     (result, status) -> {
                                         if (status.isError()) {
@@ -263,12 +266,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 {
                     JsonObject entry = new JsonObject();
 
+                    entry.addProperty("swap", "motors");
                     entry.addProperty("Input1", false);
                     entry.addProperty("Input2", true);
                     entry.addProperty("Input3", true);
                     entry.addProperty("Input4", false);
 
-                    pubnub.publish().channel(theChannel).message(entry).async
+                    pubnub.publish().channel(masterChannel).message(entry).async
                             (
                                     (result, status) -> {
                                         if (status.isError()) {
@@ -301,12 +305,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 {
                     JsonObject entry = new JsonObject();
 
+                    entry.addProperty("swap", "motors");
                     entry.addProperty("Input1", false);
                     entry.addProperty("Input2", true);
                     entry.addProperty("Input3", false);
                     entry.addProperty("Input4", true);
 
-                    pubnub.publish().channel(theChannel).message(entry).async
+                    pubnub.publish().channel(masterChannel).message(entry).async
                             (
                                     (result, status) -> {
                                         if (status.isError()) {
@@ -336,9 +341,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
                     JsonObject entry = new JsonObject();
 
-                    entry.addProperty("Release", false);
-                    entry.addProperty("Grab", true);
-                    pubnub.publish().channel(clawChannel).message(entry).async
+                    entry.addProperty("swap", "claw");
+                    entry.addProperty("claw", false);
+                    pubnub.publish().channel(masterChannel).message(entry).async
                             (
                                     (result, status) -> {
                                         if (status.isError()) {
@@ -364,10 +369,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
                     JsonObject entry = new JsonObject();
 
-                    entry.addProperty("Release", true);
-                    entry.addProperty("Grab", false);
+                    entry.addProperty("swap", "claw");
+                    entry.addProperty("claw", true);
 
-                    pubnub.publish().channel(clawChannel).message(entry).async
+                    pubnub.publish().channel(masterChannel).message(entry).async
                             (
                                     (result, status) -> {
                                         if (status.isError()) {
