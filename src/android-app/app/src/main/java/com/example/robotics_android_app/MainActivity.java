@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // WebView client that will display camera feed
         webView = (WebView) findViewById(R.id.webView);
         webView.setWebViewClient(new WebViewClient());
-        webView.loadUrl("http://99.177.203.235:8000/index.html");
+        webView.loadUrl("http://192.168.1.91:8000");
 
         // Set font for Action Bar
         actionBarFont();
