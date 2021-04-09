@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // WebView client that will display camera feed
         webView = (WebView) findViewById(R.id.webView);
         webView.setWebViewClient(new WebViewClient());
-        webView.loadUrl("http://192.168.1.91:8000");
+        webView.loadUrl("http://192.168.176.74:8000");
 
         // Set font for Action Bar
         actionBarFont();
@@ -153,7 +153,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         JsonObject entry = new JsonObject();
 
-        entry.addProperty("swap", "motors");
+        entry.addProperty("swap", true);
         entry.addProperty("Input1", false);
         entry.addProperty("Input2", false);
         entry.addProperty("Input3", false);
@@ -186,7 +186,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 {
                     JsonObject entry = new JsonObject();
 
-                    entry.addProperty("swap", "motors");
+                    entry.addProperty("swap", true);
                     entry.addProperty("Input1", true);
                     entry.addProperty("Input2", false);
                     entry.addProperty("Input3", true);
@@ -226,7 +226,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 {
                     JsonObject entry = new JsonObject();
 
-                    entry.addProperty("swap", "motors");
+                    entry.addProperty("swap", true);
                     entry.addProperty("Input1", true);
                     entry.addProperty("Input2", false);
                     entry.addProperty("Input3", false);
@@ -266,7 +266,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 {
                     JsonObject entry = new JsonObject();
 
-                    entry.addProperty("swap", "motors");
+                    entry.addProperty("swap", true);
                     entry.addProperty("Input1", false);
                     entry.addProperty("Input2", true);
                     entry.addProperty("Input3", true);
@@ -305,7 +305,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 {
                     JsonObject entry = new JsonObject();
 
-                    entry.addProperty("swap", "motors");
+                    entry.addProperty("swap", true);
                     entry.addProperty("Input1", false);
                     entry.addProperty("Input2", true);
                     entry.addProperty("Input3", false);
@@ -341,8 +341,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
                     JsonObject entry = new JsonObject();
 
-                    entry.addProperty("swap", "claw");
-                    entry.addProperty("claw", false);
+                    entry.addProperty("swap", false);
+                    entry.addProperty("Release", false);
+                    entry.addProperty("Grab", true);
+
                     pubnub.publish().channel(masterChannel).message(entry).async
                             (
                                     (result, status) -> {
@@ -369,8 +371,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
                     JsonObject entry = new JsonObject();
 
-                    entry.addProperty("swap", "claw");
-                    entry.addProperty("claw", true);
+                    entry.addProperty("swap", false);
+                    entry.addProperty("Release", true);
+                    entry.addProperty("Grab", false);
 
                     pubnub.publish().channel(masterChannel).message(entry).async
                             (
