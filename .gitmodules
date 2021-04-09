@@ -1,0 +1,3 @@
+[submodule "src/object-detection-pi"]
+	path = src/object-detection-pi
+	url = https://github.com/frahz/object-detection-pi
