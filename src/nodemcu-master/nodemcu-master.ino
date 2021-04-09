@@ -24,7 +24,8 @@ const int IN3 = 13;
 const int IN4 = 15;
 
 // claw pin
-const int clawPin = 4; // D2
+const int releasePin = 5;
+const int grabPin = 16;
 
 SimpleTimer timer;
 
@@ -54,7 +55,8 @@ void setup(void)
     pinMode(IN4, OUTPUT);
 
     // claw pin
-    pinMode(clawPin, OUTPUT);
+    pinMode(releasePin, OUTPUT);
+    pinMode(grabPin, OUTPUT);
 
     timer.setInterval(500);
 }
@@ -85,16 +87,19 @@ void sub()
     }
 
     // Parse
-    const size_t bufferSize = JSON_OBJECT_SIZE(5) + 60;
+    const size_t bufferSize = JSON_OBJECT_SIZE(7) + 70;
+//    Serial.println(bufferSize);
     DynamicJsonDocument doc(bufferSize);
 
     deserializeJson(doc, buffer);
     JsonArray root = doc.as<JsonArray>();
+    
 
-    const char *swap = root[0]["swap"];
-    Serial.println(swap);
+    bool swapValue = root[0]["swap"];
+    Serial.println(swapValue);
+    
 
-    if (String(swap) == "motors")
+    if (swapValue == 1)
     {
         bool input1 = root[0]["Input1"]; // false
         bool input2 = root[0]["Input2"]; // false
@@ -115,11 +120,19 @@ void sub()
         digitalWrite(IN3, input3);
         digitalWrite(IN4, input4);
     }
-    else if (String(swap) == "claw")
+    else if (swapValue == 0)
     {
-        bool claw = root[0]["claw"]; // true == Release | false == Grab
-
-        digitalWrite(clawPin, claw);
+        bool _release = root[0]["Release"];
+        bool grab = root[0]["Grab"];
+        
+        Serial.print("Release: ");
+        Serial.println(_release);
+        Serial.print("Grab: ");
+        Serial.println(grab);
+        
+        digitalWrite(releasePin, _release);
+        digitalWrite(grabPin, grab);
+        
     }
 }
 
