@@ -88,16 +88,14 @@ void sub()
 
     // Parse
     const size_t bufferSize = JSON_OBJECT_SIZE(7) + 70;
-//    Serial.println(bufferSize);
+    //    Serial.println(bufferSize);
     DynamicJsonDocument doc(bufferSize);
 
     deserializeJson(doc, buffer);
     JsonArray root = doc.as<JsonArray>();
-    
 
     bool swapValue = root[0]["swap"];
     Serial.println(swapValue);
-    
 
     if (swapValue == 1)
     {
@@ -124,15 +122,14 @@ void sub()
     {
         bool _release = root[0]["Release"];
         bool grab = root[0]["Grab"];
-        
+
         Serial.print("Release: ");
         Serial.println(_release);
         Serial.print("Grab: ");
         Serial.println(grab);
-        
+
         digitalWrite(releasePin, _release);
         digitalWrite(grabPin, grab);
-        
     }
 }
 
