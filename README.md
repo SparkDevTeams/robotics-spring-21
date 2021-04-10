@@ -1,6 +1,5 @@
 # SparkDev Robotics
 
-<!--- 
 ## Team
 
 **Lead:** [Fernando Barranco](https://github.com/FJBarranco)\
@@ -10,9 +9,7 @@
 **Team-Member:** Anthony Velazquez\
 **Team-Member:** [Javier Fernandez](https://github.com/theogcrafted)\
 **Team-Member:** Natalie Rodriguez\
-**Team-Member:** Kyle Reynolds\
-**Team-Member:** Eloy Beaucejor
--->
+**Team-Member:** Kyle Reynolds
 
 ## Project Summary
 
